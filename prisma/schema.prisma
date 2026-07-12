@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password_hash String
+  created_at    DateTime  @default(now())
+  accounts        Account[]
+  categories      Category[]
+  received_shares AccountShare[] @relation("ReceivedShares")
+  budgets         Budget[]
+}
+
+model Account {
+  id           String        @id @default(uuid())
+  user_id      String
+  user         User          @relation(fields: [user_id], references: [id])
+  name         String
+  balance      Float         @default(0.00)
+  created_at   DateTime      @default(now())
+  transactions Transaction[]
+  shares       AccountShare[]
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  user_id      String
+  user         User          @relation(fields: [user_id], references: [id])
+  name         String
+  transactions Transaction[]
+  budgets      Budget[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  account_id  String
+  account     Account  @relation(fields: [account_id], references: [id])
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id])
+  amount      Float
+  note        String?
+  date        DateTime
+}
+
+model AccountShare {
+  id                  String   @id @default(uuid())
+  account_id          String
+  account             Account  @relation(fields: [account_id], references: [id])
+  shared_with_user_id String
+  shared_with_user    User     @relation("ReceivedShares", fields: [shared_with_user_id], references: [id])
+  role                String   @default("VIEWER") // "VIEWER" or "EDITOR"
+  created_at          DateTime @default(now())
+
+  @@unique([account_id, shared_with_user_id])
+}
+
+model Budget {
+  id          String   @id @default(uuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id])
+  amount      Float
+  month       Int
+  year        Int
+  created_at  DateTime @default(now())
+
+  @@unique([user_id, category_id, month, year])
+}

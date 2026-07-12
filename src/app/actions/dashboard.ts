@@ -1,0 +1,135 @@
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { getBudgetStatus } from "./budgets";
+
+export async function getDashboardData() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const userId = session.user.id;
+
+  const accounts = await prisma.account.findMany({
+    where: { 
+      OR: [
+        { user_id: userId },
+        { shares: { some: { shared_with_user_id: userId } } }
+      ]
+    },
+    select: { id: true, balance: true },
+  });
+  const accountIds = accounts.map(a => a.id);
+  const totalBalance = accounts.reduce((acc, account) => acc + account.balance, 0);
+
+  // This month's bounds
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  // Last month's bounds (for hero feature insight)
+  const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  // Transactions this month
+  const thisMonthTransactions = await prisma.transaction.findMany({
+    where: {
+      account_id: { in: accountIds },
+      date: { gte: startOfMonth, lte: endOfMonth },
+    },
+    include: { category: true },
+  });
+
+  let spendingThisMonth = 0;
+  let incomeThisMonth = 0;
+  const spendingByCategory: Record<string, number> = {};
+  const spendingByDate: Record<string, number> = {};
+
+  thisMonthTransactions.forEach((tx) => {
+    if (tx.amount < 0) {
+      const expense = Math.abs(tx.amount);
+      spendingThisMonth += expense;
+      
+      const catName = tx.category.name;
+      spendingByCategory[catName] = (spendingByCategory[catName] || 0) + expense;
+      
+      const dateStr = tx.date.toISOString().split('T')[0];
+      spendingByDate[dateStr] = (spendingByDate[dateStr] || 0) + expense;
+    } else {
+      incomeThisMonth += tx.amount;
+    }
+  });
+
+  const pieChartData = Object.entries(spendingByCategory)
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value);
+
+  const lineChartData = Object.entries(spendingByDate)
+    .map(([date, amount]) => ({ date, amount }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  // Hero feature: Insight callout - compare spending
+  const lastMonthTransactions = await prisma.transaction.findMany({
+    where: {
+      account_id: { in: accountIds },
+      date: { gte: startOfLastMonth, lte: endOfLastMonth },
+      amount: { lt: 0 },
+    },
+  });
+
+  const spendingLastMonth = lastMonthTransactions.reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
+  
+  let insight = null;
+  if (spendingLastMonth > 0) {
+    const diff = spendingThisMonth - spendingLastMonth;
+    const percentChange = Math.round((diff / spendingLastMonth) * 100);
+    if (percentChange > 0) {
+      insight = `You spent ${percentChange}% more this month compared to last month.`;
+    } else {
+      insight = `Great job! You spent ${Math.abs(percentChange)}% less this month compared to last month.`;
+    }
+  } else if (spendingThisMonth > 0) {
+    insight = "This is your first month of tracking! Keep it up.";
+  }
+
+  // Feature: Net Worth Chart
+  const allTransactions = await prisma.transaction.findMany({
+    where: { account_id: { in: accountIds } },
+    orderBy: { date: 'desc' }
+  });
+
+  const txByDate: Record<string, number> = {};
+  for (const tx of allTransactions) {
+    const d = tx.date.toISOString().split('T')[0];
+    txByDate[d] = (txByDate[d] || 0) + tx.amount;
+  }
+
+  const netWorthData: { date: string, amount: number }[] = [];
+  let runningBalance = totalBalance;
+  
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split('T')[0];
+    
+    netWorthData.unshift({ date: dateStr, amount: runningBalance });
+    
+    if (txByDate[dateStr]) {
+      runningBalance -= txByDate[dateStr];
+    }
+  }
+
+  const budgetStatus = await getBudgetStatus(userId, now.getMonth() + 1, now.getFullYear());
+
+  return {
+    totalBalance,
+    incomeThisMonth,
+    spendingThisMonth,
+    pieChartData,
+    lineChartData,
+    netWorthData,
+    insight,
+    budgetStatus,
+  };
+}
