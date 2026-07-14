@@ -3,8 +3,7 @@
 import React, { useMemo } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, AreaChart, Area } from "recharts";
 import { formatCurrency } from "@/lib/utils";
-
-const COLORS = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'];
+import { getCategoryColor } from "@/lib/colors";
 
 export const DashboardCharts = React.memo(function DashboardCharts({ 
   pieChartData, 
@@ -36,7 +35,7 @@ export const DashboardCharts = React.memo(function DashboardCharts({
                   label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                 >
                   {pieChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={getCategoryColor(entry.name)} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value: any) => typeof value === 'number' ? formatCurrency(value) : value} />

@@ -38,7 +38,7 @@ export async function getDashboardData() {
       account_id: { in: accountIds },
       date: { gte: startOfMonth, lte: endOfMonth },
     },
-    include: { category: true },
+    include: { category: true, account: true },
   });
 
   let spendingThisMonth = 0;
@@ -122,6 +122,49 @@ export async function getDashboardData() {
 
   const budgetStatus = await getBudgetStatus(userId, now.getMonth() + 1, now.getFullYear());
 
+  // Feature: Sankey Flow Data
+  const nodesMap = new Map<string, { id: string, name: string, type: 'income' | 'account' | 'expense' }>();
+  const linksMap = new Map<string, { source: string, target: string, value: number }>();
+
+  thisMonthTransactions.forEach(tx => {
+    if (tx.amount === 0) return;
+
+    const accountId = `account_${tx.account_id}`;
+    if (!nodesMap.has(accountId)) {
+      nodesMap.set(accountId, { id: accountId, name: tx.account.name, type: 'account' });
+    }
+
+    if (tx.amount > 0) {
+      const incId = `income_${tx.category_id}`;
+      if (!nodesMap.has(incId)) nodesMap.set(incId, { id: incId, name: tx.category.name, type: 'income' });
+      
+      const linkId = `${incId}->${accountId}`;
+      const existingLink = linksMap.get(linkId);
+      if (existingLink) {
+        existingLink.value += tx.amount;
+      } else {
+        linksMap.set(linkId, { source: incId, target: accountId, value: tx.amount });
+      }
+    } else if (tx.amount < 0) {
+      const expId = `expense_${tx.category_id}`;
+      if (!nodesMap.has(expId)) nodesMap.set(expId, { id: expId, name: tx.category.name, type: 'expense' });
+      
+      const linkId = `${accountId}->${expId}`;
+      const existingLink = linksMap.get(linkId);
+      const absVal = Math.abs(tx.amount);
+      if (existingLink) {
+        existingLink.value += absVal;
+      } else {
+        linksMap.set(linkId, { source: accountId, target: expId, value: absVal });
+      }
+    }
+  });
+
+  const sankeyData = {
+    nodes: Array.from(nodesMap.values()),
+    links: Array.from(linksMap.values())
+  };
+
   return {
     totalBalance,
     incomeThisMonth,
@@ -131,5 +174,6 @@ export async function getDashboardData() {
     netWorthData,
     insight,
     budgetStatus,
+    sankeyData,
   };
 }

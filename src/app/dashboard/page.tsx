@@ -3,8 +3,14 @@ import { DashboardCharts } from "@/components/DashboardCharts";
 import { BudgetProgress } from "@/components/BudgetProgress";
 import { ArrowUpIcon, ArrowDownIcon, WalletIcon } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { SankeyChart } from "@/components/SankeyChart";
+import { RecentTransactions } from "@/components/RecentTransactions";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const data = await getDashboardData();
 
   return (
@@ -105,6 +111,12 @@ export default async function DashboardPage() {
           <BudgetProgress status={data.budgetStatus} />
         </div>
       </div>
+
+      <div className="mb-8">
+        <SankeyChart data={data.sankeyData} />
+      </div>
+
+      <RecentTransactions categoryId={typeof searchParams.category === 'string' ? searchParams.category : undefined} />
     </div>
   );
 }

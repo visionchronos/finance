@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { LogoutButton } from "./LogoutButton";
+import { Logo } from "./Logo";
 
 export async function Navigation() {
   const session = await getServerSession(authOptions);
@@ -14,9 +15,11 @@ export async function Navigation() {
         <div className="flex h-16 justify-between">
           <div className="flex">
             <div className="flex flex-shrink-0 items-center">
-              <span className="text-xl font-bold text-indigo-600">Finance</span>
+              <Link href="/dashboard">
+                <Logo className="h-10 w-auto text-[#1b5e3a] hover:opacity-90 transition-opacity" />
+              </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
               <Link
                 href="/dashboard"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"

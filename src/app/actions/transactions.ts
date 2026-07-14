@@ -65,11 +65,11 @@ export async function createTransaction(formData: FormData) {
   }
 }
 
-export async function getTransactions(page: number = 1, limit: number = 50) {
+export async function getTransactions(page: number = 1, limit: number = 50, categoryId?: string) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return { data: [], total: 0 };
 
-  const whereClause = {
+  const whereClause: any = {
     account: {
       OR: [
         { user_id: session.user.id },
@@ -77,6 +77,10 @@ export async function getTransactions(page: number = 1, limit: number = 50) {
       ]
     },
   };
+
+  if (categoryId) {
+    whereClause.category_id = categoryId;
+  }
 
   const [data, total] = await Promise.all([
     prisma.transaction.findMany({

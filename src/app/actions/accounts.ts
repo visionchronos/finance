@@ -29,8 +29,9 @@ export async function createAccount(formData: FormData) {
 
     revalidatePath("/accounts");
     return { success: true };
-  } catch (error) {
-    return { error: "Failed to create account" };
+  } catch (error: any) {
+    console.error("Account creation error:", error);
+    return { error: error.message || "Failed to create account" };
   }
 }
 
