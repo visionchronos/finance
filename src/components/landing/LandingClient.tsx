@@ -16,10 +16,10 @@ export function LandingClient({ initialSkip }: { initialSkip: boolean }) {
     setIsMounted(true);
     
     // Check reduced motion and screen width
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mql.matches || window.innerWidth < 700) {
-      setShouldSkip(true);
-    }
+    // const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // if (mql.matches || window.innerWidth < 700) {
+    //   setShouldSkip(true);
+    // }
   }, []);
 
   const handleComplete = () => {
@@ -52,16 +52,23 @@ export function LandingClient({ initialSkip }: { initialSkip: boolean }) {
 
   return (
     <div className="w-screen h-screen bg-[#0f172a] overflow-hidden">
-      <div className="absolute top-10 w-full text-center z-10 pointer-events-none">
-        <h1 className="text-4xl font-bold text-white/90 drop-shadow-md">Welcome to Finance</h1>
-        <p className="text-indigo-200 mt-2">Click any panel to enter</p>
+      <div className="absolute top-16 w-full text-center z-10 pointer-events-none flex flex-col items-center px-4">
+        <div className="inline-flex items-center rounded-full px-3 py-1 mb-6 text-sm font-medium text-indigo-300 ring-1 ring-inset ring-indigo-400/20 bg-indigo-400/10 backdrop-blur-md">
+          Finance v2.0
+        </div>
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm">
+          Welcome to Finance
+        </h1>
+        <p className="text-slate-300 mt-4 text-lg font-light tracking-wide max-w-xl">
+          An interactive dashboard to track accounts, categorize spending, and visualize your financial health. Click any panel to enter.
+        </p>
       </div>
       
       <LandingScene onComplete={handleComplete} />
 
       <button 
         onClick={handleComplete}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 hover:text-white/90 text-sm transition-colors z-10"
+        className="absolute top-8 right-8 bg-black/20 hover:bg-black/40 px-4 py-2 rounded-full text-white/70 hover:text-white text-sm transition-colors z-50 backdrop-blur-sm border border-white/10"
       >
         Skip Intro
       </button>

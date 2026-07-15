@@ -1,7 +1,7 @@
 import middleware from "next-auth/middleware";
 import { NextRequest } from "next/server";
 
-export function proxy(req: NextRequest) {
+export default function authMiddleware(req: NextRequest) {
   return (middleware as any)(req);
 }
 

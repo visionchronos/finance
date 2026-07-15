@@ -101,7 +101,7 @@ export function SankeyChart({ data }: SankeyProps) {
       <div ref={containerRef} className="w-full h-[400px] overflow-hidden relative cursor-crosshair">
         <svg width={dimensions.width} height={dimensions.height}>
           <defs>
-            {graph.links.map((link: any, i) => {
+            {graph.links.map((link: any, i: number) => {
               const sourceColor = getCategoryColor(link.source.name);
               const targetColor = getCategoryColor(link.target.name);
               return (
@@ -115,7 +115,7 @@ export function SankeyChart({ data }: SankeyProps) {
 
           {/* Links */}
           <g>
-            {graph.links.map((link: any, i) => {
+            {graph.links.map((link: any, i: number) => {
               const d = sankeyLinkHorizontal()(link);
               if (!d) return null;
               
@@ -178,7 +178,7 @@ export function SankeyChart({ data }: SankeyProps) {
 
           {/* Nodes */}
           <g>
-            {graph.nodes.map((node: any, i) => {
+            {graph.nodes.map((node: any, i: number) => {
               const isDimmed = hoveredNodeId !== null && hoveredNodeId !== node.id && hoveredLinkId === null;
               
               return (
