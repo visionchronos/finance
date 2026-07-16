@@ -44,8 +44,8 @@ export async function Navigation() {
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <div className="relative ml-3">
               <div className="flex items-center gap-4">
-                <ThemeToggle />
                 <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{session.user.email}</span>
+                <ThemeToggle />
                 <LogoutButton />
               </div>
             </div>

@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import dynamic from "next/dynamic";
 import Lenis from "lenis";
+import { ChromaVideo } from "./ChromaVideo";
 
 // Dynamically import the 3D scene so it only renders on client
 const HeroScene = dynamic(() => import("./HeroScene"), {
@@ -14,24 +15,26 @@ const HeroScene = dynamic(() => import("./HeroScene"), {
 });
 
 // Staggered text animation variants
-const containerVariants = {
+import type { Variants } from "framer-motion";
+
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
+      staggerChildren: 0.05,
+      delayChildren: 0.05
     }
   }
 };
 
-const lineVariants = {
+const lineVariants: Variants = {
   hidden: { y: 50, opacity: 0, rotateX: 20 },
   visible: { 
     y: 0, 
     opacity: 1, 
     rotateX: 0,
-    transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }
+    transition: { duration: 0.12, ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number] }
   }
 };
 
@@ -94,10 +97,13 @@ export function AbyssalLanding({ isSignedIn }: AbyssalLandingProps) {
       </div>
 
       {/* 2. Hero Section */}
-      <section className="relative h-screen w-full overflow-hidden flex items-center">
+      <section className="relative h-screen w-full overflow-hidden flex items-center bg-[#05050A]">
         
+        {/* Ambient Video Background */}
+        <ChromaVideo />
+
         {/* Background 3D Scene */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <HeroScene />
         </div>
         
@@ -116,14 +122,14 @@ export function AbyssalLanding({ isSignedIn }: AbyssalLandingProps) {
                 initial={{ width: 0 }} 
                 whileInView={{ width: 24 }} 
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.12, delay: 0.05 }}
                 className="h-[1px] bg-[#00FFA3]" 
               />
               <motion.span 
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.12, delay: 0.1 }}
                 className="text-[10px] uppercase tracking-[0.3em] text-[#A1A1AA] font-mono"
               >
                 — Your money, mapped —
@@ -161,10 +167,10 @@ export function AbyssalLanding({ isSignedIn }: AbyssalLandingProps) {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 0.12, delay: 0.15 }}
               className="mt-12 text-lg md:text-xl text-[#A1A1AA] font-mono leading-relaxed max-w-md pointer-events-auto"
             >
-              Our website features and core values
+              Master your financial universe with unparalleled precision and real-time insights.
             </motion.p>
           </div>
         </motion.div>
@@ -182,10 +188,77 @@ export function AbyssalLanding({ isSignedIn }: AbyssalLandingProps) {
         </Marquee>
       </section>
       
-      {/* Spacer to show scrolling */}
-      <div className="h-screen bg-[#05050A] flex items-center justify-center">
-        <p className="text-[#52525B] font-mono text-sm tracking-[0.2em] uppercase">Our website features and core values</p>
-      </div>
+      {/* Features Section */}
+      <section id="features" className="relative py-32 bg-[#05050A]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="mb-20">
+            <h2 className="text-3xl md:text-5xl font-light tracking-tighter text-white mb-6">
+              Precision Instruments for<br />
+              <span className="text-[#00FFA3] italic">Financial Mastery</span>
+            </h2>
+            <p className="text-[#A1A1AA] font-mono text-sm tracking-wide max-w-xl">
+              We provide the tools necessary to analyze, understand, and control every aspect of your wealth.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {[
+              {
+                title: "Comprehensive Account Tracking",
+                desc: "Aggregate all your accounts in one unified dashboard. From checking to investments, visualize your total net worth seamlessly.",
+                delay: 0.1
+              },
+              {
+                title: "Advanced Cash Flow Visualization",
+                desc: "Understand exactly where your money goes with our interactive Sankey diagrams and deep-dive analytics.",
+                delay: 0.2
+              },
+              {
+                title: "Intelligent Budgeting",
+                desc: "Set, monitor, and achieve your financial goals with proactive budget tracking and real-time progress indicators.",
+                delay: 0.3
+              },
+              {
+                title: "Frictionless Data Import",
+                desc: "Bring your historical data with ease using our robust CSV import tool, designed for seamless integration and categorization.",
+                delay: 0.4
+              }
+            ].map((feature, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.2, delay: feature.delay }}
+                className="group relative p-8 rounded-3xl border border-white/[0.08] bg-[#0F1016] hover:bg-[#13141C] transition-colors"
+              >
+                <div className="absolute top-0 left-8 w-12 h-[1px] bg-[#00FFA3] group-hover:w-24 transition-all duration-500" />
+                <h3 className="text-xl font-medium text-white mb-4 mt-2">{feature.title}</h3>
+                <p className="text-[#A1A1AA] leading-relaxed font-light">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative py-32 border-t border-white/[0.08] bg-[#05050A] overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#00FFA3] opacity-[0.03] blur-[120px] rounded-full pointer-events-none" />
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-white mb-8">
+            Ready to take <span className="italic text-[#C4B5FD]">control</span>?
+          </h2>
+          <p className="text-[#A1A1AA] font-mono mb-12 max-w-xl mx-auto">
+            Join the platform built for those who demand absolute clarity and uncompromising precision in their financial life.
+          </p>
+          <Link 
+            href={isSignedIn ? "/dashboard" : "/login"}
+            className="inline-flex items-center justify-center px-8 py-4 text-sm font-medium uppercase tracking-wider text-[#05050A] bg-white hover:bg-[#00FFA3] rounded-full transition-all duration-300 hover:scale-105"
+          >
+            {isSignedIn ? "Enter Dashboard" : "Get Started Now"}
+          </Link>
+        </div>
+      </section>
 
     </div>
   );

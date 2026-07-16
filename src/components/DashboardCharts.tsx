@@ -32,6 +32,8 @@ export const DashboardCharts = React.memo(function DashboardCharts({
                   fill="#8884d8"
                   paddingAngle={5}
                   dataKey="value"
+                  nameKey="name"
+                  isAnimationActive={false}
                   label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                 >
                   {pieChartData.map((entry, index) => (

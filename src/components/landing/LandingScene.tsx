@@ -3,13 +3,20 @@
 import { useRef, useState, useMemo, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox, Text, Sparkles } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette, Noise } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { COLORS } from "@/lib/colors";
 
-function FloatingPanel({ position, title, subtitle, color, onClick }: any) {
+interface FloatingPanelProps {
+  position: [number, number, number];
+  title: string;
+  subtitle: string;
+  color: string;
+  onClick: () => void;
+}
+
+function FloatingPanel({ position, title, subtitle, color, onClick }: FloatingPanelProps) {
   const [hovered, setHovered] = useState(false);
-  const meshRef = useRef<any>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const innerRef = useRef<THREE.Group>(null);
 
@@ -43,11 +50,12 @@ function FloatingPanel({ position, title, subtitle, color, onClick }: any) {
     // 3. Emissive Intensity (Brightness)
     if (meshRef.current) {
       const targetIntensity = hovered ? 0.55 : 0.35;
+      const material = meshRef.current.material as THREE.MeshStandardMaterial;
       if (prefersReducedMotion) {
-        meshRef.current.material.emissiveIntensity = targetIntensity;
+        material.emissiveIntensity = targetIntensity;
       } else {
-        meshRef.current.material.emissiveIntensity = THREE.MathUtils.lerp(
-          meshRef.current.material.emissiveIntensity,
+        material.emissiveIntensity = THREE.MathUtils.lerp(
+          material.emissiveIntensity,
           targetIntensity,
           delta * 8
         );
@@ -60,7 +68,7 @@ function FloatingPanel({ position, title, subtitle, color, onClick }: any) {
       <group
         ref={groupRef}
         onPointerOver={(e) => { e.stopPropagation(); document.body.style.cursor = 'pointer'; setHovered(true); }}
-        onPointerOut={(e) => { document.body.style.cursor = 'auto'; setHovered(false); }}
+        onPointerOut={() => { document.body.style.cursor = 'auto'; setHovered(false); }}
         onClick={(e) => { e.stopPropagation(); onClick(); }}
       >
         <group ref={innerRef}>
@@ -111,7 +119,6 @@ function FloatingPanel({ position, title, subtitle, color, onClick }: any) {
 
 function SceneGroup({ isAnimating, onAnimationComplete }: { isAnimating: boolean, onAnimationComplete: () => void }) {
   const groupRef = useRef<THREE.Group>(null);
-  const { camera } = useThree();
   
   const targetCameraPos = useMemo(() => new THREE.Vector3(0, 0, -2), []);
 
@@ -128,7 +135,7 @@ function SceneGroup({ isAnimating, onAnimationComplete }: { isAnimating: boolean
 
     if (isAnimating) {
       // Camera dives deeply into the scene
-      camera.position.lerp(targetCameraPos, delta * 3.5);
+      state.camera.position.lerp(targetCameraPos, delta * 3.5);
       
       if (groupRef.current) {
         // Explode outwards and spin
@@ -140,14 +147,14 @@ function SceneGroup({ isAnimating, onAnimationComplete }: { isAnimating: boolean
       }
       
       // Fire transition when camera passes through or gets close enough
-      if (camera.position.z < 3.0) {
+      if (state.camera.position.z < 3.0) {
         onAnimationComplete();
       }
     } else {
       // Gentle parallax effect tied to mouse
-      camera.position.x = THREE.MathUtils.lerp(camera.position.x, (state.mouse.x * 2.5), delta * 2);
-      camera.position.y = THREE.MathUtils.lerp(camera.position.y, (state.mouse.y * 2.5), delta * 2);
-      camera.lookAt(0, 0, 0);
+      state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, (state.mouse.x * 2.5), delta * 2);
+      state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, (state.mouse.y * 2.5), delta * 2);
+      state.camera.lookAt(0, 0, 0);
     }
   });
 
@@ -163,7 +170,7 @@ function SceneGroup({ isAnimating, onAnimationComplete }: { isAnimating: boolean
       {panels.map((p, i) => (
         <FloatingPanel 
           key={i} 
-          position={p.pos} 
+          position={p.pos as [number, number, number]} 
           title={p.title}
           subtitle={p.subtitle}
           color={p.color} 

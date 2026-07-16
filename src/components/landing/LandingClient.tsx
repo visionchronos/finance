@@ -13,13 +13,14 @@ export function LandingClient({ initialSkip }: { initialSkip: boolean }) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     
     // Check reduced motion and screen width
-    // const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // if (mql.matches || window.innerWidth < 700) {
-    //   setShouldSkip(true);
-    // }
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mql.matches || window.innerWidth < 700) {
+      setShouldSkip(true);
+    }
   }, []);
 
   const handleComplete = () => {

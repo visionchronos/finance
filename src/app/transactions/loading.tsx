@@ -4,10 +4,10 @@ export default function Loading() {
       <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white h-96 rounded-xl shadow-sm border border-gray-200"></div>
+          <div className="bg-white dark:bg-white/5 h-96 rounded-xl shadow-sm border border-gray-200 dark:border-white/10"></div>
         </div>
         <div>
-          <div className="bg-white h-80 rounded-xl shadow-sm border border-gray-200"></div>
+          <div className="bg-white dark:bg-white/5 h-80 rounded-xl shadow-sm border border-gray-200 dark:border-white/10"></div>
         </div>
       </div>
     </div>

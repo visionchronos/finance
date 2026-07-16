@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${outfit.variable} ${manrope.variable} h-full antialiased suppressHydrationWarning`}
         suppressHydrationWarning
       >
-      <body className="min-h-full flex flex-col bg-gray-50 dark:bg-[#02040a] text-gray-900 dark:text-white transition-colors">
+      <body className="min-h-full flex flex-col transition-colors">
         <Providers>
           <Navigation />
           <main className="flex-1">{children}</main>

@@ -6,6 +6,11 @@
   --foreground: #171717;
 }
 
+.dark {
+  --background: #02040a;
+  --foreground: #ffffff;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -13,8 +18,8 @@
   --font-mono: var(--font-manrope);
 }
 
-body {
-  background: var(--background);
+html, body {
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }

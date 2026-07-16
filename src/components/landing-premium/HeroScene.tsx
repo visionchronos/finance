@@ -83,7 +83,6 @@ function FloatingObjects() {
 export default function HeroScene() {
   return (
     <Canvas camera={{ position: [0, 0, 10], fov: 35 }}>
-      <color attach="background" args={['#05050A']} />
       <fog attach="fog" args={['#05050A', 6, 14]} />
       
       {/* Lights */}
@@ -102,10 +101,10 @@ export default function HeroScene() {
       <Sparkles count={150} scale={12} size={1.5} speed={0.4} color={MINT} opacity={0.2} />
       <Sparkles count={100} scale={12} size={1} speed={0.2} color={LAVENDER} opacity={0.2} />
 
-      <EffectComposer disableNormalPass>
+      <EffectComposer>
         <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} />
         <Noise opacity={0.02} />
-        <Vignette eskil={false} offset={0.1} darkness={1.1} />
+        <Vignette offset={0.1} darkness={1.1} />
       </EffectComposer>
     </Canvas>
   );

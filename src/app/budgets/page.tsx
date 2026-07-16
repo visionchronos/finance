@@ -20,7 +20,7 @@ export default async function BudgetsPage() {
             Monthly Budgets
           </h2>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Set spending limits for your categories. We'll automatically pull in last month's budgets if you haven't set them for this month yet.
+            Set spending limits for your categories. We&apos;ll automatically pull in last month&apos;s budgets if you haven&apos;t set them for this month yet.
           </p>
         </div>
       </div>

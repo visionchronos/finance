@@ -43,27 +43,36 @@ export async function getDashboardData() {
 
   let spendingThisMonth = 0;
   let incomeThisMonth = 0;
-  const spendingByCategory: Record<string, number> = {};
+  const categoryNet: Record<string, number> = {};
   const spendingByDate: Record<string, number> = {};
 
+  // First pass: Aggregate net amount per category
   thisMonthTransactions.forEach((tx) => {
+    const catName = tx.category.name;
+    categoryNet[catName] = (categoryNet[catName] || 0) + tx.amount;
+    
+    // For the daily trend line, we'll still just track absolute expenses
+    // so the chart doesn't dip below zero and look confusing
     if (tx.amount < 0) {
-      const expense = Math.abs(tx.amount);
-      spendingThisMonth += expense;
-      
-      const catName = tx.category.name;
-      spendingByCategory[catName] = (spendingByCategory[catName] || 0) + expense;
-      
       const dateStr = tx.date.toISOString().split('T')[0];
-      spendingByDate[dateStr] = (spendingByDate[dateStr] || 0) + expense;
-    } else {
-      incomeThisMonth += tx.amount;
+      spendingByDate[dateStr] = (spendingByDate[dateStr] || 0) + Math.abs(tx.amount);
     }
   });
 
-  const pieChartData = Object.entries(spendingByCategory)
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value);
+  // Second pass: Categorize net sums into Income vs Spending
+  const pieChartData: { name: string, value: number }[] = [];
+  
+  Object.entries(categoryNet).forEach(([name, netAmount]) => {
+    if (netAmount < 0) {
+      const expense = Math.abs(netAmount);
+      spendingThisMonth += expense;
+      pieChartData.push({ name, value: expense });
+    } else if (netAmount > 0) {
+      incomeThisMonth += netAmount;
+    }
+  });
+
+  pieChartData.sort((a, b) => b.value - a.value);
 
   const lineChartData = Object.entries(spendingByDate)
     .map(([date, amount]) => ({ date, amount }))
