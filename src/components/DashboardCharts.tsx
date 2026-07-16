@@ -17,8 +17,8 @@ export const DashboardCharts = React.memo(function DashboardCharts({
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       {/* Pie Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-medium text-gray-900 mb-6">Spending by Category (This Month)</h3>
+      <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Spending by Category (This Month)</h3>
         {pieChartData.length > 0 ? (
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
@@ -43,15 +43,15 @@ export const DashboardCharts = React.memo(function DashboardCharts({
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-72 flex items-center justify-center text-gray-500 text-sm">
+          <div className="h-72 flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
             No expenses this month.
           </div>
         )}
       </div>
 
       {/* Line Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-medium text-gray-900 mb-6">Spending Trend (This Month)</h3>
+      <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Spending Trend (This Month)</h3>
         {lineChartData.length > 1 ? (
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
@@ -88,8 +88,8 @@ export const DashboardCharts = React.memo(function DashboardCharts({
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-72 flex flex-col items-center justify-center text-gray-500 text-sm">
-            <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="h-72 flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
+            <svg className="w-12 h-12 text-gray-300 dark:text-gray-700 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
             </svg>
             Need at least 2 data points for a trend line.
@@ -98,8 +98,8 @@ export const DashboardCharts = React.memo(function DashboardCharts({
       </div>
 
       {/* Net Worth Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 lg:col-span-2">
-        <h3 className="text-lg font-medium text-gray-900 mb-6">Net Worth (Last 30 Days)</h3>
+      <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10 lg:col-span-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Net Worth (Last 30 Days)</h3>
         {netWorthData.length > 1 ? (
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
@@ -141,8 +141,8 @@ export const DashboardCharts = React.memo(function DashboardCharts({
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-72 flex flex-col items-center justify-center text-gray-500 text-sm">
-            <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="h-72 flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
+            <svg className="w-12 h-12 text-gray-300 dark:text-gray-700 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
             Need at least 2 data points to chart net worth.

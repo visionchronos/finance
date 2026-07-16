@@ -42,8 +42,8 @@ export function ShareAccountForm({ accountId }: { accountId: string }) {
   }
 
   return (
-    <div className="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-      <h4 className="text-sm font-medium text-gray-900 mb-3">Share Account</h4>
+    <div className="mt-4 p-4 bg-gray-50 dark:bg-black/30 rounded-md border border-gray-200 dark:border-white/10">
+      <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Share Account</h4>
       <form onSubmit={handleSubmit} className="flex items-start gap-3">
         <div className="flex-1">
           <input
@@ -51,13 +51,13 @@ export function ShareAccountForm({ accountId }: { accountId: string }) {
             name="email"
             required
             placeholder="User email"
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-black/50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
           />
         </div>
         <div>
           <select
             name="role"
-            className="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
+            className="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-white/10 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white dark:bg-black/50"
           >
             <option value="VIEWER">Viewer</option>
             <option value="EDITOR">Editor</option>
@@ -73,13 +73,13 @@ export function ShareAccountForm({ accountId }: { accountId: string }) {
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          className="rounded-md bg-white dark:bg-white/10 px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-transparent hover:bg-gray-50 dark:hover:bg-white/20"
         >
           Cancel
         </button>
       </form>
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-      {success && <p className="mt-2 text-sm text-green-600">Account shared successfully!</p>}
+      {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
+      {success && <p className="mt-2 text-sm text-green-600 dark:text-green-400">Account shared successfully!</p>}
     </div>
   );
 }

@@ -24,16 +24,16 @@ export function AccountForm() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-      <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">Add New Account</h3>
+    <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+      <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Add New Account</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-            <p className="text-sm text-red-600">{error}</p>
+          <div className="p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-md">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
           </div>
         )}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
             Account Name
           </label>
           <div className="mt-2">
@@ -42,14 +42,14 @@ export function AccountForm() {
               name="name"
               id="name"
               required
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-black/50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
               placeholder="e.g. Chase Checking"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="balance" className="block text-sm font-medium leading-6 text-gray-900">
+          <label htmlFor="balance" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
             Starting Balance
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -62,7 +62,7 @@ export function AccountForm() {
               id="balance"
               step="0.01"
               defaultValue="0.00"
-              className="block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+              className="block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 dark:text-white bg-white dark:bg-black/50 ring-1 ring-inset ring-gray-300 dark:ring-white/10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
               placeholder="0.00"
             />
           </div>

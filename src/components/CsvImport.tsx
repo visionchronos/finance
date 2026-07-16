@@ -68,13 +68,13 @@ export function CsvImport({ accounts }: { accounts: { id: string, name: string }
   if (accounts.length === 0) return null;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
-      <h3 className="text-lg font-medium text-gray-900 mb-4">Import Transactions (CSV)</h3>
+    <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10 mb-8">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Import Transactions (CSV)</h3>
       <div className="flex items-center gap-4">
         <select
           value={accountId}
           onChange={(e) => setAccountId(e.target.value)}
-          className="rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 dark:text-white bg-white dark:bg-black/50 ring-1 ring-inset ring-gray-300 dark:ring-white/10 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
           {accounts.map(acc => (
             <option key={acc.id} value={acc.id}>{acc.name}</option>
@@ -97,21 +97,21 @@ export function CsvImport({ accounts }: { accounts: { id: string, name: string }
       
       
       {error && (
-        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-sm text-red-600">{error}</p>
+        <div className="mt-4 p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-md">
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
       
       {success && (
-        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-          <p className="text-sm text-green-700 font-medium">Transactions imported successfully!</p>
+        <div className="mt-4 p-3 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 rounded-md">
+          <p className="text-sm text-green-700 dark:text-green-400 font-medium">Transactions imported successfully!</p>
         </div>
       )}
 
       {rowErrors.length > 0 && (
-        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-          <p className="text-sm text-yellow-800 font-medium mb-1">Some rows were skipped:</p>
-          <ul className="text-xs text-yellow-700 list-disc list-inside max-h-32 overflow-y-auto">
+        <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/20 rounded-md">
+          <p className="text-sm text-yellow-800 dark:text-yellow-400 font-medium mb-1">Some rows were skipped:</p>
+          <ul className="text-xs text-yellow-700 dark:text-yellow-500 list-disc list-inside max-h-32 overflow-y-auto">
             {rowErrors.map((err, i) => (
               <li key={i}>{err}</li>
             ))}
@@ -119,7 +119,7 @@ export function CsvImport({ accounts }: { accounts: { id: string, name: string }
         </div>
       )}
 
-      <p className="mt-4 text-xs text-gray-500">
+      <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
         Expected CSV headers: Date, Amount, Category (optional), Note (optional)
       </p>
     </div>

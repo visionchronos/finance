@@ -68,24 +68,24 @@ export function BudgetForm({
   const monthName = new Date(year, month - 1).toLocaleString('default', { month: 'long' });
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-      <h3 className="text-lg font-medium text-gray-900 mb-6">Budgets for {monthName} {year}</h3>
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Budgets for {monthName} {year}</h3>
       
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-sm text-red-600">{error}</p>
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-md">
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
 
       <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
         {categories.map((category) => (
-          <div key={category.id} className="flex items-center justify-between gap-4 py-2 border-b border-gray-100 last:border-0">
-            <label htmlFor={`budget-${category.id}`} className="text-sm font-medium text-gray-700 flex-1">
+          <div key={category.id} className="flex items-center justify-between gap-4 py-2 border-b border-gray-100 dark:border-white/5 last:border-0">
+            <label htmlFor={`budget-${category.id}`} className="text-sm font-medium text-gray-700 dark:text-gray-300 flex-1">
               {category.name}
             </label>
             <div className="relative rounded-md shadow-sm w-32">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-gray-500 sm:text-sm">₹</span>
+                <span className="text-gray-500 dark:text-gray-400 sm:text-sm">₹</span>
               </div>
               <input
                 type="number"
@@ -94,7 +94,7 @@ export function BudgetForm({
                 step="0.01"
                 value={budgets[category.id] || ""}
                 onChange={(e) => handleChange(category.id, e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 motion-safe:transition-colors"
+                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-3 text-gray-900 dark:text-white bg-white dark:bg-black/50 ring-1 ring-inset ring-gray-300 dark:ring-white/10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 motion-safe:transition-colors"
                 placeholder="0.00"
               />
             </div>
@@ -103,7 +103,7 @@ export function BudgetForm({
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-4">
-        {success && <span className="text-sm text-green-600 font-medium">Saved successfully!</span>}
+        {success && <span className="text-sm text-green-600 dark:text-green-400 font-medium">Saved successfully!</span>}
         <button
           type="submit"
           disabled={loading}

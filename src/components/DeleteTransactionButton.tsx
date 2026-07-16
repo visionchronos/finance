@@ -17,18 +17,18 @@ export function DeleteTransactionButton({ id, accountId, amount }: { id: string,
   if (isConfirming) {
     return (
       <div className="flex items-center gap-2">
-        <span className="text-xs text-gray-500">Sure?</span>
+        <span className="text-xs text-gray-500 dark:text-gray-400">Sure?</span>
         <button
           onClick={handleDelete}
           disabled={isDeleting}
-          className="text-red-600 hover:text-red-900 text-sm font-medium motion-safe:transition-colors disabled:opacity-50"
+          className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 text-sm font-medium motion-safe:transition-colors disabled:opacity-50"
         >
           {isDeleting ? "..." : "Yes"}
         </button>
         <button
           onClick={() => setIsConfirming(false)}
           disabled={isDeleting}
-          className="text-gray-500 hover:text-gray-700 text-sm font-medium motion-safe:transition-colors disabled:opacity-50"
+          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm font-medium motion-safe:transition-colors disabled:opacity-50"
         >
           No
         </button>
@@ -39,7 +39,7 @@ export function DeleteTransactionButton({ id, accountId, amount }: { id: string,
   return (
     <button
       onClick={() => setIsConfirming(true)}
-      className="text-red-600 hover:text-red-900 text-sm font-medium motion-safe:transition-colors"
+      className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 text-sm font-medium motion-safe:transition-colors"
     >
       Delete
     </button>

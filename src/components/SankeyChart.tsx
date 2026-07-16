@@ -62,8 +62,8 @@ export function SankeyChart({ data }: SankeyProps) {
 
   if (data.nodes.length === 0 || data.links.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex items-center justify-center h-[400px]">
-        <p className="text-gray-500">Not enough data to generate money flow this month.</p>
+      <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10 flex items-center justify-center h-[400px]">
+        <p className="text-gray-500 dark:text-gray-400">Not enough data to generate money flow this month.</p>
       </div>
     );
   }
@@ -96,8 +96,8 @@ export function SankeyChart({ data }: SankeyProps) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-      <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">Money Flow</h3>
+    <div className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+      <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4">Money Flow</h3>
       <div ref={containerRef} className="w-full h-[400px] overflow-hidden relative cursor-crosshair">
         <svg width={dimensions.width} height={dimensions.height}>
           <defs>
@@ -134,8 +134,8 @@ export function SankeyChart({ data }: SankeyProps) {
                   onMouseLeave={() => setHoveredLinkId(null)}
                   onMouseMove={(e) => handleMouseMove(e, (
                     <div className="text-sm">
-                      <div className="font-semibold text-gray-900 mb-1">{formatCurrency(link.value)}</div>
-                      <div className="text-gray-600 flex items-center gap-1">
+                      <div className="font-semibold text-gray-900 dark:text-white mb-1">{formatCurrency(link.value)}</div>
+                      <div className="text-gray-600 dark:text-gray-400 flex items-center gap-1">
                         <span style={{ color: getCategoryColor(link.source.name) }}>{link.source.name}</span>
                         <span>→</span>
                         <span style={{ color: getCategoryColor(link.target.name) }}>{link.target.name}</span>
@@ -189,8 +189,8 @@ export function SankeyChart({ data }: SankeyProps) {
                   onClick={() => handleNodeClick(node)}
                   onMouseMove={(e) => handleMouseMove(e, (
                     <div className="text-sm">
-                      <div className="font-semibold text-gray-900 mb-1">{node.name}</div>
-                      <div className="text-gray-600">Total: {formatCurrency(node.value)}</div>
+                      <div className="font-semibold text-gray-900 dark:text-white mb-1">{node.name}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Total: {formatCurrency(node.value)}</div>
                       {node.type !== 'account' && <div className="text-indigo-500 text-xs mt-1">Click to filter transactions</div>}
                     </div>
                   ))}
@@ -213,7 +213,7 @@ export function SankeyChart({ data }: SankeyProps) {
                     y={(node.y1 + node.y0) / 2}
                     dy="0.35em"
                     textAnchor={node.x0 < dimensions.width / 2 ? "start" : "end"}
-                    className="text-xs font-semibold fill-gray-800 pointer-events-none"
+                    className="text-xs font-semibold fill-gray-800 dark:fill-gray-200 pointer-events-none"
                   >
                     {node.name}
                   </text>
@@ -226,7 +226,7 @@ export function SankeyChart({ data }: SankeyProps) {
         {/* HTML Tooltip Overlay */}
         {tooltip.visible && (
           <div 
-            className="absolute z-50 bg-white/95 backdrop-blur shadow-lg border border-gray-200 rounded-lg p-3 pointer-events-none transform -translate-x-1/2 -translate-y-[120%]"
+            className="absolute z-50 bg-white/95 dark:bg-[#02040a]/95 backdrop-blur shadow-lg border border-gray-200 dark:border-white/10 rounded-lg p-3 pointer-events-none transform -translate-x-1/2 -translate-y-[120%]"
             style={{ left: tooltip.x, top: tooltip.y }}
           >
             {tooltip.content}

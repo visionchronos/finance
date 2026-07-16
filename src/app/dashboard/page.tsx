@@ -16,17 +16,17 @@ export default async function DashboardPage({
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+        <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
           Dashboard
         </h2>
         {data.insight && (
-          <div className="mt-4 bg-indigo-50 p-4 rounded-lg border border-indigo-100 flex items-start">
+          <div className="mt-4 bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-100 dark:border-indigo-500/20 flex items-start">
             <div className="flex-shrink-0">
               <span className="text-indigo-400 text-xl">💡</span>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-indigo-800">Insight</h3>
-              <div className="mt-1 text-sm text-indigo-700">
+              <h3 className="text-sm font-medium text-indigo-800 dark:text-indigo-300">Insight</h3>
+              <div className="mt-1 text-sm text-indigo-700 dark:text-indigo-400">
                 <p>{data.insight}</p>
               </div>
             </div>
@@ -36,18 +36,18 @@ export default async function DashboardPage({
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
         {/* Total Balance Card */}
-        <div className="bg-white overflow-hidden rounded-xl shadow-sm border border-gray-200 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="bg-white dark:bg-white/5 overflow-hidden rounded-xl shadow-sm border border-gray-200 dark:border-white/10 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="p-3 bg-indigo-100 rounded-md">
-                  <WalletIcon className="h-6 w-6 text-indigo-600" aria-hidden="true" />
+                <div className="p-3 bg-indigo-100 dark:bg-indigo-500/20 rounded-md">
+                  <WalletIcon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
                 </div>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="truncate text-sm font-medium text-gray-500">Total Balance</dt>
-                  <dd className={`mt-1 text-3xl font-semibold tracking-tight ${data.totalBalance < 0 ? 'text-red-600' : 'text-gray-900'} truncate`}>
+                  <dt className="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Total Balance</dt>
+                  <dd className={`mt-1 text-3xl font-semibold tracking-tight ${data.totalBalance < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-white'} truncate`}>
                     {formatCurrency(data.totalBalance)}
                   </dd>
                 </dl>
@@ -57,18 +57,18 @@ export default async function DashboardPage({
         </div>
 
         {/* Income Card */}
-        <div className="bg-white overflow-hidden rounded-xl shadow-sm border border-gray-200 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="bg-white dark:bg-white/5 overflow-hidden rounded-xl shadow-sm border border-gray-200 dark:border-white/10 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="p-3 bg-green-100 rounded-md">
-                  <ArrowUpIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                <div className="p-3 bg-green-100 dark:bg-green-500/20 rounded-md">
+                  <ArrowUpIcon className="h-6 w-6 text-green-600 dark:text-green-400" aria-hidden="true" />
                 </div>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="truncate text-sm font-medium text-gray-500">Income This Month</dt>
-                  <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 truncate">
+                  <dt className="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Income This Month</dt>
+                  <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white truncate">
                     {formatCurrency(data.incomeThisMonth)}
                   </dd>
                 </dl>
@@ -78,18 +78,18 @@ export default async function DashboardPage({
         </div>
 
         {/* Expenses Card */}
-        <div className="bg-white overflow-hidden rounded-xl shadow-sm border border-gray-200 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="bg-white dark:bg-white/5 overflow-hidden rounded-xl shadow-sm border border-gray-200 dark:border-white/10 motion-safe:transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="p-3 bg-red-100 rounded-md">
-                  <ArrowDownIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                <div className="p-3 bg-red-100 dark:bg-red-500/20 rounded-md">
+                  <ArrowDownIcon className="h-6 w-6 text-red-600 dark:text-red-400" aria-hidden="true" />
                 </div>
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="truncate text-sm font-medium text-gray-500">Spending This Month</dt>
-                  <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 truncate">
+                  <dt className="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Spending This Month</dt>
+                  <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white truncate">
                     {formatCurrency(data.spendingThisMonth)}
                   </dd>
                 </dl>

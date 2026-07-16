@@ -7,41 +7,41 @@ export async function RecentTransactions({ categoryId }: { categoryId?: string }
   const { data: transactions } = await getTransactions(1, 15, categoryId);
 
   return (
-    <div id="recent-transactions" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-8 scroll-mt-8">
+    <div id="recent-transactions" className="bg-white dark:bg-[#02040a]/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-white/10 mt-8 scroll-mt-8">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium leading-6 text-gray-900">
+        <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
           {categoryId ? "Filtered Transactions" : "Recent Transactions"}
         </h3>
         {categoryId && (
-          <Link href="/dashboard" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/dashboard" className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
             Clear Filter
           </Link>
         )}
       </div>
 
       {transactions.length === 0 ? (
-        <div className="text-center py-6 text-sm text-gray-500">
+        <div className="text-center py-6 text-sm text-gray-500 dark:text-gray-400">
           No transactions found for this filter.
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-white/10">
             <thead>
               <tr>
-                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Note</th>
-                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account</th>
-                <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Note</th>
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account</th>
+                <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-transparent divide-y divide-gray-200 dark:divide-white/10">
               {transactions.map((tx) => (
-                <tr key={tx.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <tr key={tx.id} className="hover:bg-gray-50 dark:hover:bg-white/5">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {new Date(tx.date).toLocaleDateString()}
                   </td>
-                  <td className="px-3 py-4 text-sm text-gray-900 max-w-[200px] truncate">
+                  <td className="px-3 py-4 text-sm text-gray-900 dark:text-white max-w-[200px] truncate">
                     {tx.note || "-"}
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm">
@@ -56,10 +56,10 @@ export async function RecentTransactions({ categoryId }: { categoryId?: string }
                       {tx.category.name}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                     {tx.account.name}
                   </td>
-                  <td className={`whitespace-nowrap px-3 py-4 text-sm text-right font-medium ${tx.amount < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                  <td className={`whitespace-nowrap px-3 py-4 text-sm text-right font-medium ${tx.amount < 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                     {tx.amount > 0 ? '+' : ''}{formatCurrency(tx.amount)}
                   </td>
                 </tr>
@@ -68,8 +68,8 @@ export async function RecentTransactions({ categoryId }: { categoryId?: string }
           </table>
         </div>
       )}
-      <div className="mt-4 pt-4 border-t border-gray-100 text-center">
-        <Link href="/transactions" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+      <div className="mt-4 pt-4 border-t border-gray-100 dark:border-white/10 text-center">
+        <Link href="/transactions" className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
           View all transactions →
         </Link>
       </div>

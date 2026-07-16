@@ -19,28 +19,28 @@ export default async function AccountsPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           {accounts.length === 0 ? (
-            <div className="text-center rounded-xl border-2 border-dashed border-gray-300 p-12">
-              <h3 className="mt-2 text-sm font-semibold text-gray-900">No accounts</h3>
-              <p className="mt-1 text-sm text-gray-500">Get started by creating a new account.</p>
+            <div className="text-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12">
+              <h3 className="mt-2 text-sm font-semibold text-gray-900 dark:text-white">No accounts</h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by creating a new account.</p>
             </div>
           ) : (
-            <div className="overflow-hidden bg-white shadow-sm ring-1 ring-gray-300 sm:rounded-xl">
-              <ul role="list" className="divide-y divide-gray-200">
+            <div className="overflow-hidden bg-white dark:bg-[#02040a]/50 shadow-sm ring-1 ring-gray-300 dark:ring-white/10 sm:rounded-xl">
+              <ul role="list" className="divide-y divide-gray-200 dark:divide-white/10">
                 {accounts.map((account) => (
-                  <li key={account.id} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 motion-safe:transition-all duration-300 hover:shadow-sm rounded-lg mb-2 overflow-hidden">
+                  <li key={account.id} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 dark:hover:bg-white/5 sm:px-6 motion-safe:transition-all duration-300 hover:shadow-sm rounded-lg mb-2 overflow-hidden">
                     <div className="flex min-w-0 gap-x-4 items-center">
-                      <div className="h-12 w-12 flex-none rounded-full bg-indigo-50 flex items-center justify-center">
-                        <span className="text-indigo-600 font-semibold text-lg">{account.name.charAt(0)}</span>
+                      <div className="h-12 w-12 flex-none rounded-full bg-indigo-50 dark:bg-indigo-500/20 flex items-center justify-center">
+                        <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-lg">{account.name.charAt(0)}</span>
                       </div>
                       <div className="min-w-0 flex-auto">
-                        <p className="text-sm font-semibold leading-6 text-gray-900">
+                        <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
                           {account.name}
                         </p>
                       </div>
                     </div>
                       <div className="flex shrink-0 items-center gap-x-4">
                         <div className="hidden sm:flex sm:flex-col sm:items-end">
-                          <p className={`text-lg leading-6 font-semibold ${account.balance < 0 ? 'text-red-600' : 'text-gray-900'}`}>
+                          <p className={`text-lg leading-6 font-semibold ${account.balance < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-white'}`}>
                             {formatCurrency(account.balance)}
                           </p>
                           <ShareAccountForm accountId={account.id} />
